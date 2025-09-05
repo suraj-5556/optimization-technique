@@ -5,42 +5,48 @@ def gradient_descent(X, y, weights, learning_rate, n_iterations, batch_size=1, m
     def feed_forward(array, weight):
         return np.dot(array, weight)
     
-    def loss(array, y):
-        count = 0
-        for i, j in zip(array, y):
-            count = count + (feed_forward(i, weights) - j) ** 2
-        return count / (2 * len(y))
-    
     def update_batch(weight, array, y):
-        for i in range(len(weight)):
-            count = 0
-            for j in range(len(y)):
-                count = count + (feed_forward(array[j], weight) - y[j]) * array[j][i]
-            weight[i] = weight[i] - learning_rate * (count / len(y))
+        w=np.zeros(len(array[0]))
+        for i in range(0,len(weight)):
+            for j in range(0,len(y)):
+                w[i] = w[i] + ((feed_forward(array[j], weight) - y[j]) * array[j][i])
+        for i in range (0,len(weight)):
+            weight[i]-= learning_rate*2*(w[i]/len(y))
     
     def update_s(weight,array,y):
-
-        y_pred=feed_forward(array,weight)
         
-        for i in range (len(y)):
-            for j in range (len(weight)):
-                weight[j]=weight[j]-learning_rate*(((y_pred[i]-y[i])*array[i][j]))
+        for i in range (0,len(y)):
+            w=np.zeros(len(weight))
+            for j in range (0,len(weight)):
+                w[j]= (feed_forward(array[i], weight)-y[i])*array[i][j]
+            for k in range (0,len(weight)):
+                weight[k]=weight[k] -learning_rate*2*(w[k])
     
-    def update_mini(weight,array,y,size):
-        y_pred=feed_forward(array,weight)
+    def update_mini(weight, array, y,size):
+        
+        w=np.zeros(len(weight))
+        count=0
+        
+        for i in range (0,len(y)):
+            for j in range (0,len(weight)):
+                w[j]= w[j]+(feed_forward(array[i], weight)-y[i])*array[i][j]
+            count=count+1
+            if count==size:
+                for k in range (0,len(weight)):
+                    weight[k]=weight[k] -learning_rate*2*(w[k]/size)
+                w=np.zeros(len(weight))
+                count=0
+          
 
-        for i in range (0,len(y),size):
-            for j in range (len(weight)):
-                weight[j]=weight[j]-learning_rate*((sum(y_pred[i:(i+size)]*array[i][j])-sum(y[i:(i+size)]*array[i][j])/size))
 
     if method == 'batch':
-        for i in range (n_iterations):
+        for i in range (0,n_iterations):
             update_batch(weights,X,y)
     elif method == 'stochastic':
-        for i in range (n_iterations):
+        for i in range (0,n_iterations):
             update_s(weights,X,y)
     elif method == 'mini_batch':
-        for i in range (n_iterations):
+        for i in range (0,n_iterations):
             update_mini(weights,X,y,batch_size)
     return weights
     
