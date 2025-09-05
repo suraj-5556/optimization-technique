@@ -1,0 +1,219 @@
+In this problem, you need to implement a single function that can perform three variants of gradient descent Stochastic Gradient Descent (SGD), Batch Gradient Descent, and Mini Batch Gradient Descent using Mean Squared Error (MSE) as the loss function. The function will take an additional parameter to specify which variant to use. Note: Do not shuffle the data
+
+Example:
+Input:
+import numpy as np
+
+# Sample data
+X = np.array([[1, 1], [2, 1], [3, 1], [4, 1]])
+y = np.array([2, 3, 4, 5])
+
+# Parameters
+learning_rate = 0.01
+n_iterations = 1000
+batch_size = 2
+
+# Initialize weights
+weights = np.zeros(X.shape[1])
+
+# Test Batch Gradient Descent
+final_weights = gradient_descent(X, y, weights, learning_rate, n_iterations, method='batch')
+# Test Stochastic Gradient Descent
+final_weights = gradient_descent(X, y, weights, learning_rate, n_iterations, method='stochastic')
+# Test Mini-Batch Gradient Descent
+final_weights = gradient_descent(X, y, weights, learning_rate, n_iterations, batch_size, method='mini_batch')
+Output:
+[float,float]
+[float, float]
+[float, float]
+Reasoning:
+The function should return the final weights after performing the specified variant of gradient descent.
+
+Learn About topic
+Understanding Gradient Descent Variants with MSE Loss
+Gradient Descent is an optimization algorithm used to minimize the cost function in machine learning models, particularly in linear regression and neural networks. The Mean Squared Error (MSE) loss function is commonly used in regression tasks. There are three main types of gradient descent based on how much data is used to compute the gradient at each iteration:
+
+Batch Gradient Descent:
+Batch Gradient Descent computes the gradient of the MSE loss function with respect to the parameters for the entire training dataset. It updates the parameters after processing the entire dataset:
+
+θ
+=
+θ
+−
+α
+⋅
+2
+m
+∑
+i
+=
+1
+m
+(
+h
+θ
+(
+x
+(
+i
+)
+)
+−
+y
+(
+i
+)
+)
+x
+(
+i
+)
+θ=θ−α⋅ 
+m
+2
+​
+  
+i=1
+∑
+m
+​
+ (h 
+θ
+​
+ (x 
+(i)
+ )−y 
+(i)
+ )x 
+(i)
+ 
+where 
+α
+α is the learning rate, 
+m
+m is the number of samples, and 
+∇
+θ
+J
+(
+θ
+)
+∇ 
+θ
+​
+ J(θ) is the gradient of the MSE loss function.
+
+Stochastic Gradient Descent (SGD):
+Stochastic Gradient Descent updates the parameters for each training example individually, making it faster but more noisy:
+
+θ
+=
+θ
+−
+α
+⋅
+2
+(
+h
+θ
+(
+x
+(
+i
+)
+)
+−
+y
+(
+i
+)
+)
+x
+(
+i
+)
+θ=θ−α⋅2(h 
+θ
+​
+ (x 
+(i)
+ )−y 
+(i)
+ )x 
+(i)
+ 
+where 
+x
+(
+i
+)
+,
+y
+(
+i
+)
+x 
+(i)
+ ,y 
+(i)
+  are individual training examples.
+
+Mini-Batch Gradient Descent:
+Mini-Batch Gradient Descent is a compromise between Batch and Stochastic Gradient Descent. It updates the parameters after processing a small batch of training examples, without shuffling the data:
+
+θ
+=
+θ
+−
+α
+⋅
+2
+b
+∑
+i
+=
+1
+b
+(
+h
+θ
+(
+x
+(
+i
+)
+)
+−
+y
+(
+i
+)
+)
+x
+(
+i
+)
+θ=θ−α⋅ 
+b
+2
+​
+  
+i=1
+∑
+b
+​
+ (h 
+θ
+​
+ (x 
+(i)
+ )−y 
+(i)
+ )x 
+(i)
+ 
+where 
+b
+b is the batch size, a subset of the training dataset.
+
+Each method has its advantages: Batch Gradient Descent is more stable but slower, Stochastic Gradient Descent is faster but noisy, and Mini-Batch Gradient Descent strikes a balance between the two.
