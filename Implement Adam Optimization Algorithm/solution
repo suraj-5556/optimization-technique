@@ -1,0 +1,17 @@
+import numpy as np
+import math
+
+def adam_optimizer(f, grad, x0, learning_rate=0.001, beta1=0.9, beta2=0.999, epsilon=1e-8, num_iterations=10):
+	# Your code here
+    v=np.zeros(len(x0))
+    m=np.zeros(len(x0))
+    for i in range (1,num_iterations+1):
+        g=grad(x0)
+
+        for j in range (0,len(x0)):
+            m[j]=m[j]*beta1+(1-beta1)*g[j]
+            v[j]=v[j]*beta2+(1-beta2)*g[j]*g[j]
+            x0[j]=x0[j]-learning_rate*((m[j]/(1-beta1**i))/(math.sqrt((v[j]/(1-beta2**i)))+epsilon))
+
+    return x0
+
