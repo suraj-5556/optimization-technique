@@ -1,0 +1,142 @@
+In this problem, you need to implement the Lasso Regression algorithm using Gradient Descent. Lasso Regression (L1 Regularization) adds a penalty equal to the absolute value of the coefficients to the loss function. Your task is to update the weights and bias iteratively using the gradient of the loss function and the L1 penalty.
+
+The objective function of Lasso Regression is:
+
+J
+(
+w
+,
+b
+)
+=
+1
+2
+n
+∑
+i
+=
+1
+n
+(
+y
+i
+−
+(
+∑
+j
+=
+1
+p
+X
+i
+j
+w
+j
++
+b
+)
+)
+2
++
+α
+∑
+j
+=
+1
+p
+∣
+w
+j
+∣
+J(w,b)= 
+2n
+1
+​
+  
+i=1
+∑
+n
+​
+ (y 
+i
+​
+ −( 
+j=1
+∑
+p
+​
+ X 
+ij
+​
+ w 
+j
+​
+ +b)) 
+2
+ +α 
+j=1
+∑
+p
+​
+ ∣w 
+j
+​
+ ∣
+Where:
+
+y
+i
+y 
+i
+​
+  is the actual value for the 
+i
+i-th sample
+y
+^
+i
+=
+∑
+j
+=
+1
+p
+X
+i
+j
+w
+j
++
+b
+y
+^
+​
+  
+i
+​
+ =∑ 
+j=1
+p
+​
+ X 
+ij
+​
+ w 
+j
+​
+ +b is the predicted value for the 
+i
+i-th sample
+w
+j
+w 
+j
+​
+  is the weight associated with the 
+j
+j-th feature
+α
+α is the regularization parameter
+b
+b is the bias
+Your task is to use the L1 penalty to shrink some of the feature coefficients to zero during gradient descent, thereby helping with feature selection.
